@@ -42,6 +42,12 @@ class PokemonController extends Controller
      */
     public function store(Request $request)
     {
+        $validate = $request->validate([
+            'name'=> "required|max:200",
+            'src'=> "required|file|image",
+            'level'=> "required|integer|between:0,100",
+            'type_id'=> "required|integer",
+        ]);
         $pokemon = new Pokemon();
         $pokemon->name = $request->name;
         Storage::put('public/img/', $request->file('src'));
@@ -90,15 +96,25 @@ class PokemonController extends Controller
      */
     public function update(Request $request, Pokemon $pokemon)
     {
+        $validate = $request->validate([
+            'name'=> "required|max:200",
+            'level'=> "required|integer|between:0,100",
+            'type_id'=> "required|integer",
+        ]);
+
         $pokemon->name = $request->name;
-        Storage::delete('public/img/'.$pokemon->src);
-        Storage::put('public/img/', $request->file('src'));
-        $pokemon->src = $request->file('src')->hashName();
+        if ($request->file('src')) {
+            Storage::delete('public/img/'.$pokemon->src);
+            Storage::put('public/img/', $request->file('src'));
+            $pokemon->src = $request->file('src')->hashName();
+        } else {
+            // nothing
+        }
         $pokemon->level = $request->level;
         $pokemon->type_id = $request->type_id;
         $pokemon->save();
 
-        return redirect()->back();
+        return redirect('/pokemon/'.$pokemon->id);
     }
 
     /**
@@ -112,6 +128,6 @@ class PokemonController extends Controller
         Storage::delete('public/img/'.$pokemon->src);
         $pokemon->delete();
 
-        return redirect()->back();
+        return redirect('/');
     }
 }

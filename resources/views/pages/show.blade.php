@@ -83,15 +83,15 @@
             <div id="barbutton4"></div>
             <a href="/pokemon/{{$pokemon->id}}/edit">
               <div id="yellowBox1" class="d-flex align-items-center justify-content-center">
-                <span>edit</span>
+                <span class="btn btn-warning text-primary font-weight-bold">EDIT</span>
               </div>
             </a>
             <form action="/pokemon/{{$pokemon->id}}" method="POST">
               @csrf
               @method('DELETE')
               <div id="yellowBox2" class="d-flex align-items-center justify-content-center">
-                <button type="submit" class="bg-transparent border-none">
-                  delete
+                <button type="submit" class="btn btn-warning text-danger font-weight-bold">
+                  DELETE
                 </button>
               </div>
             </form>

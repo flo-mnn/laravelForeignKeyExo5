@@ -1,4 +1,13 @@
 <form action="/pokemon" method="POST" enctype="multipart/form-data" class="my-5 p-3 bg-danger text-light font-weight-bold">
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
     @csrf
     <div class="form-group">
       <label>Pokemon Name</label>
@@ -9,8 +18,11 @@
       <input type="number" class="form-control" name="level" value="{{old('level')}}">
     </div>
     <div class="form-group">
-      <label for="image" class="btn btn-dark rounded-0"> + Pokemon Image</label>
-      <input type="file" class="form-control d-none"  name="src" id="image">
+      <div id="picture" class="my-auto">
+        <img src="/storage/img/pokeball.png" alt="preview" height="100" >
+      </div>
+      <label for="image" class="btn btn-dark rounded-0 mt-3"> + Pokemon Image</label>
+      <input type="file" class="form-control d-none"  name="src" id="image" onchange="previewFile()">
     </div>
     <div class="form-row">
         <div class="col-7">

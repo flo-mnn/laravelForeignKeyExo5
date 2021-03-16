@@ -5,6 +5,7 @@ use App\Http\Controllers\PokemonController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\TypeController;
 use App\Models\Pokemon;
+use App\Models\Type;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,7 +21,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome',[
-        'pokemon'=>Pokemon::all()
+        'pokemon'=>Pokemon::all(),
+        'types'=>Type::all()
     ]);
 });
 Route::resource('types',TypeController::class);

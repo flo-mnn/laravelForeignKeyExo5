@@ -35,6 +35,10 @@ class TypeController extends Controller
      */
     public function store(Request $request)
     {
+        $validate = $request->validate([
+            'type'=> "required|max:100",
+        ]);
+
         $type = new Type();
         $type->type = $request->type;
         $type->save();
